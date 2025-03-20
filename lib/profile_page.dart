@@ -8,14 +8,14 @@ class ProfilPage extends StatefulWidget {
 }
 
 class _ProfilPageState extends State<ProfilPage> {
-  final TextEditingController songController = TextEditingController();
+  final TextEditingController taskController = TextEditingController();
   final key = GlobalKey<FormState>();
-  List<Map<String, dynamic>> daftarLagu = [];
+  List<Map<String, dynamic>> daftarTask = [];
 
   void addData() {
     setState(() {
-      daftarLagu.add({
-        'song': songController.text,
+      daftarTask.add({
+        'task': taskController.text,
         'completed': false,
       });
     });
@@ -40,7 +40,7 @@ class _ProfilPageState extends State<ProfilPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text('Akhdan Jauzaa', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),),
-                        Text('Musisian',)
+                        Text('Muhammadiyah University of Yogyakarta student',)
                       ],
                     )
                 ],
@@ -52,15 +52,15 @@ class _ProfilPageState extends State<ProfilPage> {
                   Expanded(child: TextFormField(
                     validator: (value) {
                       if (value == null || value.isEmpty){
-                        return 'Harap Masukan Lagu yang kamu suka';
+                        return 'Harap Masukan Task';
                       }
                       return null;
                     },
                     autovalidateMode: AutovalidateMode.onUserInteraction,
-                    controller: songController,
+                    controller: taskController,
                     decoration: InputDecoration(
-                      label: Text('Fav Song'),
-                      hintText: 'Masukan Lagu',
+                      label: Text('Task'),
+                      hintText: 'Input Task',
                       ),
                     )
                   ),
@@ -74,7 +74,7 @@ class _ProfilPageState extends State<ProfilPage> {
               const SizedBox(height: 20),
               Expanded(
                 child: ListView.builder(
-                  itemCount: daftarLagu.length,
+                  itemCount: daftarTask.length,
                   itemBuilder: (context, index) {
                     return Container(
                       margin: EdgeInsets.only(bottom: 15),
@@ -89,23 +89,23 @@ class _ProfilPageState extends State<ProfilPage> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(daftarLagu[index]['song']),
+                              Text(daftarTask[index]['task']),
                               Text(
-                                daftarLagu[index]['completed']
+                                daftarTask[index]['completed']
                                     ? 'Done'
                                     : 'Not Done',
                                 style: TextStyle(
-                                    color: daftarLagu[index]['completed']
+                                    color: daftarTask[index]['completed']
                                         ? Colors.green
                                         : Colors.red),
                               ),
                             ],
                           ),
                           Checkbox(
-                            value: daftarLagu[index]['completed'],
+                            value: daftarTask[index]['completed'],
                             onChanged: (bool? value) {
                               setState(() {
-                                daftarLagu[index]['completed'] = value!;
+                                daftarTask[index]['completed'] = value!;
                               });
                             },
                           ),
