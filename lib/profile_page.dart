@@ -9,6 +9,7 @@ class ProfilPage extends StatefulWidget {
 
 class _ProfilPageState extends State<ProfilPage> {
   final TextEditingController taskController = TextEditingController();
+  final TextEditingController dateController = TextEditingController();
   final key = GlobalKey<FormState>();
   List<Map<String, dynamic>> daftarTask = [];
 
