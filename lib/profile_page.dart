@@ -66,51 +66,70 @@ class _ProfilPageState extends State<ProfilPage> {
                 ],
               ),
               const SizedBox(height: 20),
-
-               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Task Date:",
+                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                      IconButton(
+                        icon: Icon(Icons.calendar_today, color: Colors.blue),
+                        onPressed: () => _selectDate(context),
+                      ),
+                    ],
+                  ),
                   Text(
-                    "Task Date:",
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    dateController.text.isEmpty ? "Select a Date" : dateController.text,
+                    style: TextStyle(fontSize: 14),
                   ),
-                  IconButton(
-                    icon: Icon(Icons.calendar_today, color: Colors.blue),
-                    onPressed: () => _selectDate(context),
-                  ),
-                ],
-              ),
+                ]),
               const SizedBox(height: 20),
-
               Form(
                 key: key,
                 child: Row(
-                children: [
-                  Expanded(child: TextFormField(
-                    validator: (value) {
-                      if (value == null || value.isEmpty){
-                        return 'Harap Masukan Task';
-                      }
-                      return null;
-                    },
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    controller: taskController,
-                    decoration: InputDecoration(
-                      label: Text('Task'),
-                      hintText: 'Input Task',
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
+                  crossAxisAlignment: CrossAxisAlignment.start, 
+                  children: [
+                    Expanded(
+                      child: TextFormField(
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Harap Masukkan Task';
+                          }
+                          return null;
+                        },
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        controller: taskController,
+                        decoration: InputDecoration(
+                          labelText: 'Task',
+                          hintText: 'Input Task',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
                         ),
                       ),
-                    )
-                  ),
-                  OutlinedButton(onPressed: (){
-                    if (key.currentState!.validate()){
-                      addData();
-                    }
-                  }, child: Text('Submit')),
-                ],
-              )),
+                    ),
+                    const SizedBox(width: 10), 
+                    Align(
+                      alignment: Alignment.topCenter, 
+                      child: SizedBox(
+                        height: 56, 
+                        child: OutlinedButton(
+                          onPressed: () {
+                            if (key.currentState!.validate()) {
+                              addData();
+                            }
+                          },
+                          child: Text('Submit'),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
               const SizedBox(height: 20),
               Expanded(
                 child: ListView.builder(
