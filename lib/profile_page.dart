@@ -13,8 +13,17 @@ class _ProfilPageState extends State<ProfilPage> {
   final TextEditingController dateController = TextEditingController();
   final key = GlobalKey<FormState>();
   List<Map<String, dynamic>> daftarTask = [];
+  bool isDateSelected = false;
+  String? dateError;
 
   void addData() {
+    if (dateController.text.isEmpty) {
+      setState(() {
+        dateError = "Please select a date";
+      });
+      return;
+    }
+
     setState(() {
       daftarTask.add({
         'task': taskController.text,
@@ -23,38 +32,43 @@ class _ProfilPageState extends State<ProfilPage> {
       });
       taskController.clear();
       dateController.clear();
+      isDateSelected = false;
+      dateError = null;
     });
   }
 
   Future<void> _selectDateTime(BuildContext context) async {
-  DateTime? pickedDate = await showDatePicker(
-    context: context,
-    initialDate: DateTime.now(),
-    firstDate: DateTime(2000),
-    lastDate: DateTime(2101),
-  );
-
-  if (pickedDate != null) {
-    TimeOfDay? pickedTime = await showTimePicker(
+    DateTime? pickedDate = await showDatePicker(
       context: context,
-      initialTime: TimeOfDay.now(),
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
     );
 
-    if (pickedTime != null) {
-      DateTime fullDateTime = DateTime(
-        pickedDate.year,
-        pickedDate.month,
-        pickedDate.day,
-        pickedTime.hour,
-        pickedTime.minute,
+    if (pickedDate != null) {
+      TimeOfDay? pickedTime = await showTimePicker(
+        context: context,
+        initialTime: TimeOfDay.now(),
       );
 
-      setState(() {
-        dateController.text = DateFormat('dd-MM-yyyy HH:mm').format(fullDateTime);
-      });
+      if (pickedTime != null) {
+        DateTime fullDateTime = DateTime(
+          pickedDate.year,
+          pickedDate.month,
+          pickedDate.day,
+          pickedTime.hour,
+          pickedTime.minute,
+        );
+
+        setState(() {
+          dateController.text =
+              DateFormat('dd-MM-yyyy HH:mm').format(fullDateTime);
+          isDateSelected = true;
+          dateError = null;
+        });
+      }
     }
   }
-}
 
   @override
   Widget build(BuildContext context) {
@@ -65,48 +79,72 @@ class _ProfilPageState extends State<ProfilPage> {
           child: Column(
             children: [
               Row(
-                spacing: 15,
                 children: [
                   CircleAvatar(
                     radius: 35,
                     backgroundImage: AssetImage('assets/images/adan.jpg'),
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('Akhdan Jauzaa', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),),
-                        Text('Muhammadiyah University of Yogyakarta student',)
-                      ],
-                    )
+                  ),
+                  SizedBox(width: 15),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Akhdan Jauzaa',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 15),
+                      ),
+                      Text('Muhammadiyah University of Yogyakarta student'),
+                    ],
+                  )
                 ],
               ),
               const SizedBox(height: 20),
 
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Column(children: [
                       Text(
                         "Task Date:",
-                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
                       ),
+                      const SizedBox(height: 5),
                       Text(
-                    dateController.text.isEmpty ? "Select a Date" : dateController.text,
-                    style: TextStyle(fontSize: 14),
+                        dateController.text.isEmpty
+                            ? "Select a date"
+                            : dateController.text,
+                        style: TextStyle(
+                          fontSize: 14,
+                          color:Colors.black,
+                        ),
+                      ),
+                      if (dateError != null) 
+                        Text(
+                          dateError!,
+                          style: TextStyle(color: Colors.red, fontSize: 12),
+                        ),
+                    ],
                   ),
-                  ],),
+                  Column(
+                    children: [
                       IconButton(
                         icon: Icon(Icons.calendar_today, color: Colors.blue),
                         onPressed: () => _selectDateTime(context),
                       ),
                     ],
                   ),
-                  
+                ],
+              ),
+
               const SizedBox(height: 20),
+
               Form(
                 key: key,
                 child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start, 
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(
                       child: TextFormField(
@@ -127,15 +165,20 @@ class _ProfilPageState extends State<ProfilPage> {
                         ),
                       ),
                     ),
-                    const SizedBox(width: 10), 
+                    const SizedBox(width: 10),
                     Align(
-                      alignment: Alignment.topCenter, 
+                      alignment: Alignment.topCenter,
                       child: SizedBox(
-                        height: 56, 
+                        height: 56,
                         child: OutlinedButton(
                           onPressed: () {
-                            if (key.currentState!.validate()) {
+                            if (key.currentState!.validate() &&
+                                dateController.text.isNotEmpty) {
                               addData();
+                            } else if (dateController.text.isEmpty) {
+                              setState(() {
+                                dateError = "Please select a date";
+                              });
                             }
                           },
                           child: Text('Submit'),
@@ -145,7 +188,9 @@ class _ProfilPageState extends State<ProfilPage> {
                   ],
                 ),
               ),
+
               const SizedBox(height: 20),
+
               Expanded(
                 child: ListView.builder(
                   itemCount: daftarTask.length,
