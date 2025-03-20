@@ -26,20 +26,36 @@ class _ProfilPageState extends State<ProfilPage> {
     });
   }
 
-  Future<void> _selectDate(BuildContext context) async {
-      DateTime? picked = await showDatePicker(
-        context: context,
-        initialDate: DateTime.now(),
-        firstDate: DateTime(2000),
-        lastDate: DateTime(2101),
+  Future<void> _selectDateTime(BuildContext context) async {
+  DateTime? pickedDate = await showDatePicker(
+    context: context,
+    initialDate: DateTime.now(),
+    firstDate: DateTime(2000),
+    lastDate: DateTime(2101),
+  );
+
+  if (pickedDate != null) {
+    TimeOfDay? pickedTime = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+    );
+
+    if (pickedTime != null) {
+      DateTime fullDateTime = DateTime(
+        pickedDate.year,
+        pickedDate.month,
+        pickedDate.day,
+        pickedTime.hour,
+        pickedTime.minute,
       );
 
-      if (picked != null) {
-        setState(() {
-          dateController.text = DateFormat('dd-MM-yyyy').format(picked);
-        });
-      }
+      setState(() {
+        dateController.text = DateFormat('dd-MM-yyyy HH:mm').format(fullDateTime);
+      });
     }
+  }
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +94,7 @@ class _ProfilPageState extends State<ProfilPage> {
                       ),
                       IconButton(
                         icon: Icon(Icons.calendar_today, color: Colors.blue),
-                        onPressed: () => _selectDate(context),
+                        onPressed: () => _selectDateTime(context),
                       ),
                     ],
                   ),
