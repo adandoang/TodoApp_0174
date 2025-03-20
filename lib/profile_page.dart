@@ -24,8 +24,9 @@ class _ProfilPageState extends State<ProfilPage> {
       taskController.clear();
       dateController.clear();
     });
+  }
 
-      Future<void> _selectDate(BuildContext context) async {
+  Future<void> _selectDate(BuildContext context) async {
       DateTime? picked = await showDatePicker(
         context: context,
         initialDate: DateTime.now(),
@@ -39,7 +40,6 @@ class _ProfilPageState extends State<ProfilPage> {
         });
       }
     }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,9 +76,7 @@ class _ProfilPageState extends State<ProfilPage> {
                   ),
                   IconButton(
                     icon: Icon(Icons.calendar_today, color: Colors.blue),
-                    onPressed: () {
-                      
-                    },
+                    onPressed: () => _selectDate(context),
                   ),
                 ],
               ),
