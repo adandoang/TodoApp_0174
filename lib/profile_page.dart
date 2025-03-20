@@ -54,6 +54,12 @@ class _ProfilPageState extends State<ProfilPage> {
                     "Task Date:",
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
+                  IconButton(
+                    icon: Icon(Icons.calendar_today, color: Colors.blue),
+                    onPressed: () {
+                      
+                    },
+                  ),
                 ],
               ),
               const SizedBox(height: 20),
