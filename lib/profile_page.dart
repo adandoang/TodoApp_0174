@@ -17,6 +17,7 @@ class _ProfilPageState extends State<ProfilPage> {
     setState(() {
       daftarTask.add({
         'task': taskController.text,
+        'date': dateController.text,
         'completed': false,
       });
     });
