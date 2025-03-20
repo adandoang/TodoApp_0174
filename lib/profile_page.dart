@@ -45,6 +45,7 @@ class _ProfilPageState extends State<ProfilPage> {
                     )
                 ],
               ),
+              const SizedBox(height: 20),
               Form(
                 key: key,
                 child: Row(
@@ -61,6 +62,9 @@ class _ProfilPageState extends State<ProfilPage> {
                     decoration: InputDecoration(
                       label: Text('Task'),
                       hintText: 'Input Task',
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
                       ),
                     )
                   ),
