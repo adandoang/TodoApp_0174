@@ -1,4 +1,3 @@
-import 'package:basic_layout_2/counter_page.dart';
 import 'package:basic_layout_2/profile_page.dart';
 import 'package:flutter/material.dart';
 

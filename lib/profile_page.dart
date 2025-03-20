@@ -10,11 +10,14 @@ class ProfilPage extends StatefulWidget {
 class _ProfilPageState extends State<ProfilPage> {
   final TextEditingController songController = TextEditingController();
   final key = GlobalKey<FormState>();
-  List<String> daftarLagu = [];
+  List<Map<String, dynamic>> daftarLagu = [];
 
-  void addData(){
+  void addData() {
     setState(() {
-      daftarLagu.add(songController.text);
+      daftarLagu.add({
+        'song': songController.text,
+        'completed': false,
+      });
     });
   }
 
@@ -69,19 +72,45 @@ class _ProfilPageState extends State<ProfilPage> {
                 ],
               )),
               const SizedBox(height: 20),
-              Expanded(child: ListView.builder(
-                itemCount: daftarLagu.length,
-                itemBuilder: (context, index) {
-                  return Container(
-                    margin: EdgeInsets.only(bottom: 15),
-                    padding: const EdgeInsets.all(16.0),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.0),
-                      color: Colors.indigo[100]),
-                    child: Column(crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [Text(daftarLagu[index])],),
-                  );
-                })
+              Expanded(
+                child: ListView.builder(
+                  itemCount: daftarLagu.length,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      margin: EdgeInsets.only(bottom: 15),
+                      padding: const EdgeInsets.all(16.0),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10.0),
+                        color: Colors.indigo[100],
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(daftarLagu[index]['song']),
+                              Text(
+                                daftarLagu[index]['completed']
+                                    ? 'Done'
+                                    : 'Not Done',
+                                
+                              ),
+                            ],
+                          ),
+                          Checkbox(
+                            value: daftarLagu[index]['completed'],
+                            onChanged: (bool? value) {
+                              setState(() {
+                                daftarLagu[index]['completed'] = value!;
+                              });
+                            },
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
               )
             ],
           ),
