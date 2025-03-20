@@ -46,6 +46,18 @@ class _ProfilPageState extends State<ProfilPage> {
                 ],
               ),
               const SizedBox(height: 20),
+
+               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Task Date:",
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20),
+
               Form(
                 key: key,
                 child: Row(
