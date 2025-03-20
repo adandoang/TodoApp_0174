@@ -35,6 +35,21 @@ class _ProfilPageState extends State<ProfilPage> {
       isDateSelected = false;
       dateError = null;
     });
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          "Task added successfully",
+          style: TextStyle(color: Colors.white), 
+        ),
+        duration: Duration(seconds: 2),
+        backgroundColor: Colors.teal[700], 
+        behavior: SnackBarBehavior.floating, 
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+      ),
+    );
   }
 
   Future<void> _selectDateTime(BuildContext context) async {
