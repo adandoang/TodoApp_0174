@@ -165,7 +165,7 @@ class _ProfilPageState extends State<ProfilPage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(daftarTask[index]['task']),
-                              Text(dateController.text),
+                              Text('Deadline: ${daftarTask[index]['date']}'),
                               Text(
                                 daftarTask[index]['completed']
                                     ? 'Done'
