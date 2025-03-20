@@ -56,7 +56,6 @@ class _ProfilPageState extends State<ProfilPage> {
   }
 }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,27 +81,27 @@ class _ProfilPageState extends State<ProfilPage> {
                 ],
               ),
               const SizedBox(height: 20),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      Column(children: [
                       Text(
                         "Task Date:",
                         style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                       ),
+                      Text(
+                    dateController.text.isEmpty ? "Select a Date" : dateController.text,
+                    style: TextStyle(fontSize: 14),
+                  ),
+                  ],),
                       IconButton(
                         icon: Icon(Icons.calendar_today, color: Colors.blue),
                         onPressed: () => _selectDateTime(context),
                       ),
                     ],
                   ),
-                  Text(
-                    dateController.text.isEmpty ? "Select a Date" : dateController.text,
-                    style: TextStyle(fontSize: 14),
-                  ),
-                ]),
+                  
               const SizedBox(height: 20),
               Form(
                 key: key,
