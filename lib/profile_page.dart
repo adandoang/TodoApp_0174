@@ -94,7 +94,10 @@ class _ProfilPageState extends State<ProfilPage> {
                                 daftarLagu[index]['completed']
                                     ? 'Done'
                                     : 'Not Done',
-                                
+                                style: TextStyle(
+                                    color: daftarLagu[index]['completed']
+                                        ? Colors.green
+                                        : Colors.red),
                               ),
                             ],
                           ),
