@@ -20,6 +20,8 @@ class _ProfilPageState extends State<ProfilPage> {
         'date': dateController.text,
         'completed': false,
       });
+      taskController.clear();
+      dateController.clear();
     });
   }
 
